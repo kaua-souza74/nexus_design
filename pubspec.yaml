@@ -1,0 +1,23 @@
+name: dashboard_reference_pages
+description: NEXUS — monitoramento inteligente de espaços com sensores IoT.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/brand/nexus_logo.png
+    - assets/images/
+

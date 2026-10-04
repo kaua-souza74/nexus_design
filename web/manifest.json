@@ -1,0 +1,19 @@
+{
+  "name": "NEXUS",
+  "short_name": "NEXUS",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F6F3F1",
+  "theme_color": "#4F3139",
+  "description": "Inteligência para cada espaço.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "2000x2000",
+      "src": "nexus_logo.png",
+      "type": "image/png"
+    }
+  ]
+}
