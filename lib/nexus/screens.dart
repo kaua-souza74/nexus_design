@@ -948,37 +948,7 @@ class ProfilePage extends StatelessWidget {
     final s = NexusScope.of(context);
     return PageScroll(children: [
       const Heading('Perfil', subtitle: 'Seu hotel, do seu jeito.'),
-      Surface(
-          dark: true,
-          child: Column(children: [
-            CircleAvatar(
-                radius: 35,
-                backgroundColor: N.peach,
-                child: Text(
-                    s.userName
-                        .split(' ')
-                        .where((v) => v.isNotEmpty)
-                        .take(2)
-                        .map((v) => v[0])
-                        .join()
-                        .toUpperCase(),
-                    style: const TextStyle(
-                        color: N.wine,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600))),
-            const SizedBox(height: 18),
-            Text(s.userName,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500)),
-            const SizedBox(height: 6),
-            Text(s.hotelName,
-                style: const TextStyle(color: Colors.white70, fontSize: 13)),
-            const SizedBox(height: 15),
-            const Pill('Administrador',
-                dark: true, icon: Icons.verified_user_outlined)
-          ])),
+      _ProfileHero(userName: s.userName, hotelName: s.hotelName),
       const Section('Preferências'),
       Surface(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -1052,14 +1022,138 @@ class _Setting extends StatelessWidget {
   final String title, subtitle;
   final VoidCallback action;
   @override
-  Widget build(BuildContext context) => ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: N.wine),
-      title: Text(title, style: const TextStyle(fontSize: 14)),
-      subtitle:
-          Text(subtitle, style: const TextStyle(fontSize: 11, color: N.muted)),
-      trailing: const Icon(Icons.chevron_right, size: 20),
-      onTap: action);
+  Widget build(BuildContext context) => Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+              borderRadius: BorderRadius.circular(18),
+              onTap: action,
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(children: [
+                    Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                            color: N.canvas,
+                            borderRadius: BorderRadius.circular(14)),
+                        child: Icon(icon, color: N.wine, size: 20)),
+                    const SizedBox(width: 12),
+                    Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                          Text(title,
+                              style: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 3),
+                          Text(subtitle,
+                              style:
+                                  const TextStyle(fontSize: 10, color: N.muted))
+                        ])),
+                    Container(
+                        width: 30,
+                        height: 30,
+                        decoration: const BoxDecoration(
+                            color: N.canvas, shape: BoxShape.circle),
+                        child: const Icon(Icons.chevron_right_rounded,
+                            color: N.rose, size: 19))
+                  ])))));
+}
+
+class _ProfileHero extends StatelessWidget {
+  const _ProfileHero({required this.userName, required this.hotelName});
+  final String userName, hotelName;
+  @override
+  Widget build(BuildContext context) {
+    final initials = userName
+        .split(' ')
+        .where((part) => part.isNotEmpty)
+        .take(2)
+        .map((part) => part[0])
+        .join()
+        .toUpperCase();
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(N.radius),
+        child: SizedBox(
+            height: 260,
+            width: double.infinity,
+            child: Stack(fit: StackFit.expand, children: [
+              Semantics(
+                  image: true,
+                  label: 'Lobby do hotel ao entardecer',
+                  child: Image.asset('assets/images/lobby-evening.png',
+                      fit: BoxFit.cover, alignment: const Alignment(0.72, 0))),
+              const DecoratedBox(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                Color(0xE62E1D24),
+                Color(0x783B252C),
+                Color(0x252E1D24)
+              ], begin: Alignment.bottomLeft, end: Alignment.topRight))),
+              Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(children: [
+                          const Brand(dark: true),
+                          const Spacer(),
+                          GlassPanel(
+                              padding: const EdgeInsets.all(9),
+                              child: IconButton(
+                                  tooltip: 'Editar meu nome',
+                                  visualDensity: VisualDensity.compact,
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints.tightFor(
+                                      width: 23, height: 23),
+                                  onPressed: () => editName(context, false),
+                                  icon: const Icon(Icons.edit_outlined,
+                                      color: Colors.white, size: 17)))
+                        ]),
+                        GlassPanel(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 13),
+                            child: Row(children: [
+                              CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: N.peach,
+                                  child: Text(initials,
+                                      style: const TextStyle(
+                                          color: N.wine,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w700))),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                    Text(userName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w600)),
+                                    const SizedBox(height: 4),
+                                    Text(hotelName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 11)),
+                                  ])),
+                              const SizedBox(width: 7),
+                              const Pill('Admin',
+                                  dark: true,
+                                  icon: Icons.verified_user_outlined)
+                            ]))
+                      ]))
+            ])));
+  }
 }
 
 Future<void> editName(BuildContext context, bool hotel) async {

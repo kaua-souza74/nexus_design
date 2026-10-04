@@ -152,12 +152,14 @@ class Surface extends StatelessWidget {
               color: dark ? null : (color ?? Colors.white),
               gradient: dark && backgroundImage == null ? N.gradient : null,
               borderRadius: BorderRadius.circular(N.radius),
-              border: dark ? null : Border.all(color: Colors.white),
+              border: dark
+                  ? null
+                  : Border.all(color: N.line.withValues(alpha: .68)),
               boxShadow: [
                 BoxShadow(
-                    color: N.wine.withValues(alpha: 0.025),
-                    blurRadius: 24,
-                    offset: const Offset(0, 8))
+                    color: N.wine.withValues(alpha: 0.045),
+                    blurRadius: 25,
+                    offset: const Offset(0, 9))
               ]),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(N.radius),

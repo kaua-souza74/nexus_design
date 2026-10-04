@@ -1,12 +1,12 @@
-# Design QA — Home e Dispositivos
+# Design QA — NEXUS: Home, Dispositivos e Perfil
 
 **Findings**
 
-- [P2] Revisão visual pós-ajuste não pôde ser concluída.
-  Location: Home e Dispositivos no preview web local.
-  Evidence: as referências enviadas foram abertas e analisadas; a prévia local anterior às alterações também foi inspecionada. Depois dos ajustes, o navegador recusou reabrir `http://127.0.0.1:8082/` por política de segurança. Não foi possível capturar a versão atual nem compará-la lado a lado com as fontes.
-  Impact: sem captura posterior, não há como atestar a margem final do banner ou a legibilidade do resumo glass em viewport mobile.
-  Fix: abrir a prévia atual no navegador e repetir a comparação visual no mesmo viewport.
+- [P2] Revisão visual após as últimas alterações não pôde ser concluída.
+  Location: Home, Dispositivos e Perfil no preview web local.
+  Evidence: as duas referências enviadas foram abertas e analisadas; a prévia local anterior a estes ajustes também foi inspecionada. Ao atualizar o preview depois das mudanças, o navegador recusou a URL local por política de segurança. O novo banner de Perfil também não tem uma captura da versão atual.
+  Impact: a compilação confirma que os widgets estão corretos, mas sem a captura final não é possível atestar o recuo dos banners, a legibilidade dos painéis de vidro nem o novo corte fotográfico do Perfil.
+  Fix: abrir a prévia atual no navegador e comparar as telas no viewport mobile.
 
 **Fontes visuais**
 
@@ -15,7 +15,7 @@
 
 **Implementação e evidência**
 
-- Alvo: `http://127.0.0.1:8082/` (Flutter Web local).
+- Alvo: `http://127.0.0.1:8082/` (Flutter Web local), páginas Home, Dispositivos e Perfil.
 - Captura pós-ajuste: não disponível; bloqueada pela política do navegador ao reabrir o endereço local.
 - Viewport pretendido: mobile, correspondente às capturas do app (aprox. 435 × 867 CSS px na captura anterior). A dimensão e o DPR da versão posterior às alterações não puderam ser medidos.
 - Normalização: nenhuma; não foi criado um par comparável de capturas.
@@ -34,7 +34,8 @@
 
 - Iteração anterior: o resumo de Dispositivos distribuía dois contadores e um ícone em três larguras, produzindo uma área vazia e rótulos sem hierarquia. O banner da Home tinha recuo amplo.
 - Correções feitas: Home com 12 px de recuo horizontal; contadores Online/Offline em painel de vidro fosco sobre a imagem, com divisor central e rótulos alinhados; preferências removidas.
-- Evidência pós-correção: análise estática e build web concluídas sem erros; captura visual pós-correção bloqueada pela política do navegador.
+- Correção posterior no Perfil: banner fotográfico com logo, cartão glass de usuário/hotel e edição do nome; linhas de preferências com ícones em tiles, chevrons e áreas de toque mais claras.
+- Evidência pós-correção: Flutter Analyzer e build web concluídos sem erros; a captura visual pós-correção foi bloqueada pela política do navegador.
 
 **Open Questions**
 
@@ -45,6 +46,8 @@
 - [x] Reduzir o recuo horizontal do banner da Home.
 - [x] Unificar os contadores do resumo de Dispositivos em um painel translúcido.
 - [x] Remover biometria e redução de movimento das opções do Perfil.
+- [x] Criar banner fotográfico e cartões de preferência mais definidos para o Perfil.
+- [x] Documentar SDK, comandos, simulação, telas e direção visual no README.
 - [x] Executar Flutter Analyzer e build web.
 - [ ] Capturar e comparar a implementação recompilada no mesmo viewport das referências.
 
